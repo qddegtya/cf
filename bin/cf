@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+var path = require('path')
+var bootstrap = require('../lib/bootstrap.js').default
+
+bootstrap({
+  root: path.join(__dirname, '..', 'commands'),
+  version: require('../package.json').version
+})

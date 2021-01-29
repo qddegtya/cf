@@ -1,0 +1,26 @@
+import co from 'co'
+import tpl from './utils/tpl'
+
+export default class BaseCommand {
+  constructor() {
+    this.setup()
+  }
+
+  setup() {
+    this.context = {
+      env: process.env,
+      cwd: process.cwd()
+    }
+
+    this.helper = {}
+    this.helper.tpl = tpl
+  }
+
+  action () {
+    co(this.do.bind(this))
+      .catch((err) => {
+        // global error handler
+        throw err
+      })
+  }
+}

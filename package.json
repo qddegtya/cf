@@ -1,0 +1,42 @@
+{
+  "name": "cf",
+  "version": "1.0.0",
+  "description": "CLI Factory",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "bin": {
+    "cf": "./bin/cf"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js src/** --fix",
+    "dev": "npm run lint && babel src --out-dir lib --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qddegtya/cf.git"
+  },
+  "keywords": [
+    "cli"
+  ],
+  "author": "xiaoa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qddegtya/cf/issues"
+  },
+  "homepage": "https://github.com/qddegtya/cf#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.1.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "debug": "^4.3.1",
+    "eslint": "^7.18.0"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "commander": "^7.0.0"
+  }
+}
