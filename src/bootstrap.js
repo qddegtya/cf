@@ -5,8 +5,6 @@ import debugFactory from 'debug'
 import { COMMANDS_STORE } from './host'
 import injectCommandFromClass from './injectCommandsFromClass'
 
-const VM_NAME = '@vm/bc'
-
 const debug = debugFactory('cf:core:bootstrap')
 
 export default ({
@@ -18,15 +16,6 @@ export default ({
 
   // set version
   cli.version(version)
-
-  // load base command virtual module
-  const BASE_COMMAND_PATH = path.resolve(__dirname, './BaseCommand.js')
-
-  // patch require
-  module.constructor.prototype.require = (id) => {
-    if (id === VM_NAME) return module.require(BASE_COMMAND_PATH).default
-    return module.constructor._load(id, module)
-  }
 
   // inject commands
   const modules = fs.readdirSync(root)

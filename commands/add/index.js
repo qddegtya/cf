@@ -1,6 +1,7 @@
-const BC = require('@vm/bc')
+const BC = require('../../lib/BaseCommand').default
 const fs = require('fs')
 const path = require('path')
+const inquirer = require('inquirer')
 
 class Add extends BC {
   constructor () {
@@ -18,15 +19,35 @@ class Add extends BC {
   }
 
   async do () {
-    const cmdTpl = await this.loadCmdTpl()
-    const result = await this.helper.tpl(cmdTpl, {
-      name: 'Add',
-      command: 'add',
-      alias: 'a',
-      description: 'fdasfdas'
-    })
+    await inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'name',
+          message: "[CF] -> command name: ",
+        },
+        {
+          type: 'input',
+          name: 'alias',
+          message: "[CF] -> command alias: "
+        },
+        {
+          type: 'input',
+          name: 'description',
+          message: "[CF] -> command description: "
+        }
+      ])
+      .then(async ({ name, alias, description }) => {
+        const cmdTpl = await this.loadCmdTpl()
+        const result = await this.helper.tpl(cmdTpl, {
+          name,
+          command: name,
+          alias,
+          description
+        });
 
-    console.log(result)
+        console.log(result)
+      })
   }
 }
 
