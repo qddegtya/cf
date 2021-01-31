@@ -6,15 +6,15 @@
   <br>
 </h1>
 
-<center>
-<em>To do a good job, an artisan needs the best tools (idiom). Good tools are prerequisite to the successful execution of a job.</em>
+<p align="center">
+<em>To do a good job, an artisan needs the best tools. Good tools are prerequisite to the successful execution of a job.</em>
 <br>
 <br>
 <em>工欲善其事，必先利其器。</em>
 <br>
 <br>
 <br>
-</center>
+</p>
 
 # About
 
