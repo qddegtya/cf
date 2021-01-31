@@ -1,7 +1,7 @@
 {
   "name": "cf",
   "version": "1.0.0",
-  "description": "CLI Factory",
+  "description": "a guided and prescriptive CLI creator.",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
@@ -38,6 +38,7 @@
   "dependencies": {
     "co": "^4.6.0",
     "commander": "^7.0.0",
-    "inquirer": "^7.3.3"
+    "inquirer": "^7.3.3",
+    "xajs": "^1.0.10"
   }
 }

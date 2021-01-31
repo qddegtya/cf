@@ -2,6 +2,9 @@ const BC = require('../../lib/BaseCommand').default
 const fs = require('fs')
 const path = require('path')
 const inquirer = require('inquirer')
+const AJS = require('xajs')
+
+const tpl = AJS.future.tpl
 
 class Add extends BC {
   constructor () {
@@ -39,7 +42,7 @@ class Add extends BC {
       ])
       .then(async ({ name, alias, description }) => {
         const cmdTpl = await this.loadCmdTpl()
-        const result = await this.helper.tpl(cmdTpl, {
+        const result = await tpl.exec(cmdTpl, {
           name,
           command: name,
           alias,
