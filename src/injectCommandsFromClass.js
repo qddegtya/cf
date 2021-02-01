@@ -3,10 +3,10 @@ import { COMMANDS_STORE } from './host'
 
 const debug = debugFactory('cf:core:inject')
 
-const injectCommandFromClass = (cliEngine, CommandClass) => {
+const injectCommandFromClass = (cliEngine, CommandClass, config) => {
   const { command, alias = '', description} = CommandClass
 
-  let instance = new CommandClass()
+  let instance = new CommandClass(config)
 
   debug('DO_INJECT:: command: %s | description: %s', command, description)
   

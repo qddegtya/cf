@@ -28,7 +28,10 @@ export default ({
 
   while(module = mods.pop()) {
     try {
-      injectCommandFromClass(cli, module)
+      injectCommandFromClass(cli, module, {
+        root,
+        version
+      })
     } catch(err) {
       debug(`inject process fail: ${err}`)
       break

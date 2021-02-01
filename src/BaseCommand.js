@@ -2,7 +2,9 @@ import co from 'co'
 import tpl from './utils/tpl'
 
 export default class BaseCommand {
-  constructor() {
+  constructor(config) {
+    this.config = config
+
     this.setup()
   }
 

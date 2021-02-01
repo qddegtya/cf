@@ -1,4 +1,4 @@
-const BC = require('@vm/bc')
+const BC = require("../../lib/BaseCommand").default;
 
 class ${'name'} extends BC {
   init (commander) {
@@ -10,8 +10,8 @@ class ${'name'} extends BC {
   }
 }
 
-Add.command = "${'command'}"
-Add.alias = "${'alias'}"
-Add.description= "${'description'}"
+${'name'}.command = "${'command'}"
+${'name'}.alias = "${'alias'}"
+${'name'}.description= "${'description'}"
 
-module.exports = Add
+module.exports = ${'name'}
