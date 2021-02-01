@@ -1,5 +1,6 @@
 import co from 'co'
 import tpl from './utils/tpl'
+import { COMMANDS_STORE } from './host'
 
 export default class BaseCommand {
   constructor(config) {

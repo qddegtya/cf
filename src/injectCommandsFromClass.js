@@ -7,11 +7,12 @@ const injectCommandFromClass = (cliEngine, CommandClass, config) => {
   const { command, alias = '', description} = CommandClass
 
   let instance = new CommandClass(config)
+  CommandClass.prototype.conflict = cmd => COMMANDS_STORE.includes(cmd);
 
   debug('DO_INJECT:: command: %s | description: %s', command, description)
   
   // for debugging
-  if (COMMANDS_STORE.includes(command))
+  if (instance.conflict(command))
     throw new Error(
       `[${command}] has already been injected, `
       + `please check the \`command\` static property of ${CommandClass.name}.`

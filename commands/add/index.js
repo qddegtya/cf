@@ -38,7 +38,9 @@ class Add extends BC {
         },
       ])
       .then(async ({ name, alias, description }) => {
-        // TODO: assert name
+        if (this.conflict(name)) {
+          throw new Error(`Command [ ${name} ] exists.`);
+        }
 
         vfs
           .src("_template/cmd.tpl")
