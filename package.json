@@ -11,8 +11,10 @@
   },
   "scripts": {
     "lint": "eslint --ext .js src/** --fix",
-    "dev": "npm run lint && babel src --out-dir lib --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "babel src --out-dir lib --watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
