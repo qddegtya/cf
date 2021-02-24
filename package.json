@@ -1,13 +1,13 @@
 {
   "name": "@atools/cf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a guided and prescriptive CLI creator.",
   "main": "lib/index.js",
   "directories": {
     "test": "test"
   },
   "bin": {
-    "cf": "./bin/cf"
+    "cf": "bin/cf"
   },
   "scripts": {
     "lint": "eslint --ext .js src/** --fix",
