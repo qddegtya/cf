@@ -1,5 +1,5 @@
 {
-  "name": "cf",
+  "name": "@atools/cf",
   "version": "1.0.0",
   "description": "a guided and prescriptive CLI creator.",
   "main": "lib/index.js",
