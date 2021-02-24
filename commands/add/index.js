@@ -20,13 +20,17 @@ class Add extends BC {
   }
 
   init(commander) {
-    commander.option("-o, --output <glob>", "output dir");
+    commander
+      .option("-o, --output <path>", "output dir")
+      .option("-t, --template <path>", "tpl path");
+
     this.commander = commander;
   }
 
   async do() {
-    const { output } = this.commander.opts();
+    const { output, template } = this.commander.opts();
 
+    if (!template) throw new Error("Must set tpl param.");
     if (!output) throw new Error("Must set output param.");
 
     await inquirer
@@ -56,7 +60,11 @@ class Add extends BC {
           throw new Error(`Command alias can't be the same as its name`);
 
         vfs
-          .src(path.resolve(__dirname, "../../_template/cmd.tpl"))
+          .src(
+            IF_IS_INNER_PKG
+              ? path.resolve(__dirname, "../../_template/cmd.tpl")
+              : path.join(cwd, template)
+          )
           .pipe(
             map((file, cb) => {
               file.basename = "index.js";
