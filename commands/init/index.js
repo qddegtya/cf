@@ -11,7 +11,7 @@ class Init extends BC {
 }
 
 Init.command = "init"
-Init.alias = "init"
+Init.alias = "i"
 Init.description= "cf initializer"
 
 module.exports = Init

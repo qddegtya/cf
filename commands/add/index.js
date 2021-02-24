@@ -9,6 +9,11 @@ const map = require("map-stream");
 const tpl = AJS.future.tpl;
 const MagicString = AJS.lang.MagicString;
 
+const IF_IS_INNER_PKG =
+  JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), "package.json")).toString()
+  ).name === "@atools/cf";
+
 class Add extends BC {
   constructor(config) {
     super(config);
@@ -42,6 +47,9 @@ class Add extends BC {
           throw new Error(`Command [ ${name} ] exists.`);
         }
 
+        if (name === alias)
+          throw new Error(`Command alias can't be the same as its name`);
+
         vfs
           .src("_template/cmd.tpl")
           .pipe(
@@ -49,6 +57,9 @@ class Add extends BC {
               file.basename = "index.js";
               file.contents = Buffer.from(
                 tpl.exec(file.contents.toString(), {
+                  pkg: IF_IS_INNER_PKG
+                    ? 'require("../../lib/BaseCommand").default'
+                    : 'require("@atools/cf").BC',
                   name: MagicString(name).capitalize(),
                   command: name,
                   alias,

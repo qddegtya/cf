@@ -11,7 +11,7 @@ class Ui extends BC {
 }
 
 Ui.command = "ui"
-Ui.alias = "ui"
+Ui.alias = "u"
 Ui.description= "start cf webui"
 
 module.exports = Ui

@@ -1,4 +1,4 @@
-const BC = require("../../lib/BaseCommand").default;
+const BC = ${'pkg'};
 
 class ${'name'} extends BC {
   init (commander) {
