@@ -22,7 +22,7 @@ export default ({
       .map((moduleEntry) => {
         let modulePath = path.join(root, moduleEntry)
         debug('command module loaded: %s', modulePath)
-        return module.require(modulePath)
+        return module.require(modulePath).default || module.require(modulePath)
       })
     , mods = modules.slice()
 
