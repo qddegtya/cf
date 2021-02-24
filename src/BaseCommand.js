@@ -1,5 +1,4 @@
 import co from 'co'
-import tpl from './utils/tpl'
 import { COMMANDS_STORE } from './host'
 
 export default class BaseCommand {
@@ -16,7 +15,6 @@ export default class BaseCommand {
     }
 
     this.helper = {}
-    this.helper.tpl = tpl
   }
 
   action () {
