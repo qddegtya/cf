@@ -18,7 +18,7 @@ class Add extends BC {
   constructor(config) {
     super(config);
 
-    this.tplRoot = path.join(__dirname, "../../_template/cmd.tpl");
+    this.tplRoot = path.resolve(__dirname, "../../_template/cmd.tpl");
   }
 
   init(commander) {}
