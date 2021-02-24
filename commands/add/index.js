@@ -8,22 +8,27 @@ const map = require("map-stream");
 
 const tpl = AJS.future.tpl;
 const MagicString = AJS.lang.MagicString;
+const cwd = process.cwd();
 
 const IF_IS_INNER_PKG =
-  JSON.parse(
-    fs.readFileSync(path.join(process.cwd(), "package.json")).toString()
-  ).name === "@atools/cf";
+  JSON.parse(fs.readFileSync(path.join(cwd, "package.json")).toString())
+    .name === "@atools/cf";
 
 class Add extends BC {
   constructor(config) {
     super(config);
-
-    this.tplRoot = path.resolve(__dirname, "../../_template/cmd.tpl");
   }
 
-  init(commander) {}
+  init(commander) {
+    commander.option("-o, --output <glob>", "output dir");
+    this.commander = commander;
+  }
 
   async do() {
+    const { output } = this.commander.opts();
+
+    if (!output) throw new Error("Must set output param.");
+
     await inquirer
       .prompt([
         {
@@ -51,7 +56,7 @@ class Add extends BC {
           throw new Error(`Command alias can't be the same as its name`);
 
         vfs
-          .src("_template/cmd.tpl")
+          .src(path.resolve(__dirname, "../../_template/cmd.tpl"))
           .pipe(
             map((file, cb) => {
               file.basename = "index.js";
@@ -71,7 +76,7 @@ class Add extends BC {
               cb(null, file);
             })
           )
-          .pipe(vfs.dest(`${this.config.root}/${name}`));
+          .pipe(vfs.dest(path.join(cwd, output, name)));
       });
   }
 }
