@@ -4,10 +4,21 @@ import path from 'path'
 import debugFactory from 'debug'
 import { COMMANDS_STORE } from './host'
 import injectCommandFromClass from './injectCommandsFromClass'
+import { functional } from 'xajs'
 
+const { Puber, Suber } = functional.helper.PS
 const debug = debugFactory('cf:core:bootstrap')
 
-export default ({
+const tap = new Puber('cf-tap')
+const hook = new Suber('cf-hook')
+tap.addSuber(hook)
+
+let _hooked
+tap.emit = (msg) => {
+  _hooked && tap.pub(msg)
+}
+
+const bootstrap = ({
   cli = defaultCli,
   root,
   version
@@ -16,6 +27,8 @@ export default ({
 
   // set version
   cli.version(version)
+
+  tap.emit('will-inject')
 
   // inject commands
   const modules = fs.readdirSync(root)
@@ -40,7 +53,18 @@ export default ({
   
   if (COMMANDS_STORE.length === modules.length)
     debug('all commands have been inject.')
+
+  tap.emit('will-parse')
   
   // start parse
   cli.parse(process.argv)
 }
+
+bootstrap.hooks = {
+  listen (rss) {
+    _hooked = true
+    hook.rss(tap, rss)
+  }
+}
+
+export default bootstrap

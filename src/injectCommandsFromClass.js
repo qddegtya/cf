@@ -7,7 +7,7 @@ const injectCommandFromClass = (cliEngine, CommandClass, config) => {
   const { command, alias = '', description} = CommandClass
 
   let instance = new CommandClass(config)
-  CommandClass.prototype.conflict = cmd => COMMANDS_STORE.includes(cmd);
+  CommandClass.prototype.conflict = cmd => COMMANDS_STORE.includes(cmd)
 
   debug('DO_INJECT:: command: %s | description: %s', command, description)
   

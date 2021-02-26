@@ -26,6 +26,22 @@
 $ npm install -g cf
 ```
 
+# Advanced Usage
+
+**hooks**
+
+```javascript
+bootstrap.hooks.listen([
+  {
+    msg: 'will-inject',
+    handler: (payload) => {
+      console.log(`will-inject`)
+      process.exit(0)
+    }
+  }
+])
+```
+
 # Feature
 
 > TODO
