@@ -34,15 +34,15 @@ $ npm install -g cf
 * will-parse: before cli-engine start
 
 ```javascript
-bootstrap.hooks.listen([
-  {
-    msg: 'will-inject',
-    handler: (payload) => {
-      console.log(`will-inject`)
-      process.exit(0)
-    }
+bootstrap.hooks.listen('will-inject', async (next) => {
+  try {
+    await sleep(3000)
+  } catch (error) {
+    console.log(error)
   }
-])
+  
+  await next();
+})
 ```
 
 # Feature
