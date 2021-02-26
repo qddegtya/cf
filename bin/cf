@@ -2,6 +2,21 @@
 var path = require('path')
 var bootstrap = require('../lib/bootstrap.js').default
 
+bootstrap.hooks.listen('will-inject', async (next) => {
+  // @see https://manytools.org/hacker-tools/ascii-banner/
+  console.log(`
+  ██████╗██╗     ██╗    ███████╗ █████╗  ██████╗████████╗ ██████╗ ██████╗ ██╗   ██╗
+  ██╔════╝██║     ██║    ██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗╚██╗ ██╔╝
+  ██║     ██║     ██║    █████╗  ███████║██║        ██║   ██║   ██║██████╔╝ ╚████╔╝ 
+  ██║     ██║     ██║    ██╔══╝  ██╔══██║██║        ██║   ██║   ██║██╔══██╗  ╚██╔╝  
+  ╚██████╗███████╗██║    ██║     ██║  ██║╚██████╗   ██║   ╚██████╔╝██║  ██║   ██║   
+   ╚═════╝╚══════╝╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+                                                                                    
+  `)
+
+  await next();
+})
+
 bootstrap({
   root: path.join(__dirname, '..', 'commands'),
   version: require('../package.json').version

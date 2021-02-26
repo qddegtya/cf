@@ -22,12 +22,16 @@ const bootstrap = ({ cli = defaultCli, root, version }) => {
   // set version
   cli.version(version)
 
-  const thunkParse = () => {
+  const tapHook = (name, next) => {
+    _hooked ? tap.emit(name, next) : next()
+  }
+
+  const parse = () => {
     // start parse
     cli.parse(process.argv)
   }
 
-  const thunkInject = () => {
+  const inject = () => {
     debug('commands entry path: %s', root)
 
     // inject commands
@@ -53,14 +57,14 @@ const bootstrap = ({ cli = defaultCli, root, version }) => {
     if (COMMANDS_STORE.length === modules.length)
       debug('all commands have been inject.')
 
-    _hooked ? tap.emit('will-parse', thunkParse) : thunkParse()
+    tapHook('will-parse', parse)
   }
 
-  _hooked ? tap.emit('will-inject', thunkInject) : thunkInject()
+  tapHook('will-inject', inject)
 }
 
 bootstrap.hooks = {
-  _defaultHandler: async (next) => await next(),
+  _defaultHandler: (next) => next(),
   get _defaultListeners() {
     return {
       'will-inject': this._defaultHandler,
