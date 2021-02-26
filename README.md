@@ -28,7 +28,10 @@ $ npm install -g cf
 
 # Advanced Usage
 
-**hooks**
+**hooks list**
+
+* will-inject: before command module's injection
+* will-parse: before cli-engine start
 
 ```javascript
 bootstrap.hooks.listen([
