@@ -2,7 +2,6 @@ import defaultCli from 'commander'
 import fs from 'fs'
 import path from 'path'
 import debugFactory from 'debug'
-import { COMMANDS_STORE } from './host'
 import injectCommandFromClass from './injectCommandsFromClass'
 import { functional } from 'xajs'
 
@@ -54,9 +53,7 @@ const bootstrap = ({ cli = defaultCli, root, version }) => {
       }
     }
 
-    if (COMMANDS_STORE.length === modules.length)
-      debug('all commands have been inject.')
-
+    debug('all commands have been inject.')
     tapHook('will-parse', parse)
   }
 

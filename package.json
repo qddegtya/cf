@@ -10,7 +10,7 @@
     "cf": "bin/cf"
   },
   "scripts": {
-    "lint": "eslint --ext .js src/** --fix",
+    "lint": "eslint --ext .js src/** commands/** --fix",
     "dev": "babel src --out-dir lib --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src --out-dir lib",

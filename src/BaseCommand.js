@@ -1,5 +1,4 @@
 import co from 'co'
-import { COMMANDS_STORE } from './host'
 
 export default class BaseCommand {
   constructor(config) {
@@ -13,7 +12,7 @@ export default class BaseCommand {
       env: process.env,
       cwd: process.cwd()
     }
-
+    
     this.helper = {}
   }
 

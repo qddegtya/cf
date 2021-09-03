@@ -1,4 +1,4 @@
-const BC = require("../../lib/BaseCommand").default;
+const BC = require('../../lib/BaseCommand').default
 
 class Init extends BC {
   init (commander) {
@@ -10,8 +10,8 @@ class Init extends BC {
   }
 }
 
-Init.command = "init"
-Init.alias = "i"
-Init.description= "cf initializer"
+Init.command = 'init'
+Init.alias = 'i'
+Init.description= 'cf initializer'
 
 module.exports = Init

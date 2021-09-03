@@ -1,4 +1,4 @@
-const BC = require("../../lib/BaseCommand").default;
+const BC = require('../../lib/BaseCommand').default
 
 class Ui extends BC {
   init (commander) {
@@ -10,8 +10,8 @@ class Ui extends BC {
   }
 }
 
-Ui.command = "ui"
-Ui.alias = "u"
-Ui.description= "start cf webui"
+Ui.command = 'ui'
+Ui.alias = 'u'
+Ui.description= 'start cf webui'
 
 module.exports = Ui

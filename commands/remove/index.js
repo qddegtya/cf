@@ -1,4 +1,4 @@
-const BC = require("../../lib/BaseCommand").default;
+const BC = require('../../lib/BaseCommand').default
 
 class Remove extends BC {
   init (commander) {
@@ -10,8 +10,8 @@ class Remove extends BC {
   }
 }
 
-Remove.command = "remove"
-Remove.alias = "rm"
-Remove.description= "remove one command"
+Remove.command = 'remove'
+Remove.alias = 'rm'
+Remove.description= 'remove one command'
 
 module.exports = Remove
