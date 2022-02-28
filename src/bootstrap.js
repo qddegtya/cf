@@ -9,12 +9,14 @@ const { Puber, Suber } = functional.helper.PS
 const debug = debugFactory('cf:core:bootstrap')
 
 const tap = new Puber('cf-tap')
-const hook = new Suber('cf-hook')
-tap.addSuber(hook)
 
-let _hooked
+let isHooked = (n) => {
+  const subers = Object.keys(tap._subers)
+  return subers.indexOf(n) >= 0
+}
+
 tap.emit = (msg, payload) => {
-  _hooked && tap.pub(msg, payload)
+  isHooked(msg) && tap.pub(msg, payload)
 }
 
 const bootstrap = ({ cli = defaultCli, root, version }) => {
@@ -22,7 +24,7 @@ const bootstrap = ({ cli = defaultCli, root, version }) => {
   cli.version(version)
 
   const tapHook = (name, next) => {
-    _hooked ? tap.emit(name, next) : next()
+    isHooked(name) ? tap.emit(name, next) : next()
   }
 
   const parse = () => {
@@ -61,27 +63,18 @@ const bootstrap = ({ cli = defaultCli, root, version }) => {
 }
 
 bootstrap.hooks = {
-  _defaultHandler: (next) => next(),
-  get _defaultListeners() {
-    return {
-      'will-inject': this._defaultHandler,
-      'will-parse': this._defaultHandler,
-    }
-  },
-
-  listen(n, h) {
+  listen(n, h = (next) => next()) {
     if (!n) return
-    _hooked = true
-    const listeners = { ...this._defaultListeners, ...{ [n]: h } }
-    hook.rss(
-      tap,
-      Object.keys(listeners).map((k) => {
-        return {
-          msg: k,
-          handler: listeners[k],
-        }
-      })
-    )
+
+    const hook = new Suber(n)
+    tap.addSuber(hook)
+
+    hook.rss(tap, [
+      {
+        msg: n,
+        handler: h,
+      },
+    ])
   },
 }
 
