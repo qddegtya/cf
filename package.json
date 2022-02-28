@@ -1,6 +1,6 @@
 {
   "name": "@atools/cf",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "a guided and prescriptive CLI creator.",
   "main": "lib/index.js",
   "directories": {
