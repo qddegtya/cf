@@ -20,6 +20,12 @@
 
 ✨ a guided and prescriptive CLI creator.
 
+# Feature
+
+* 🚀 One-shot bootstrap
+* ⚙ Support lifecycle mode
+* 🙂 Guided and prescriptive
+
 # Quick Start
 
 ```
@@ -44,7 +50,3 @@ bootstrap.hooks.listen('will-inject', async (next) => {
   await next();
 })
 ```
-
-# Feature
-
-> TODO
