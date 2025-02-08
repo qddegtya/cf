@@ -19,6 +19,10 @@
       "semi": [
           2,
           "never"
+      ],
+      "no-unused-vars": [
+          2,
+          { "vars": "all", "args": "after-used" }
       ]
   },
   "env": {

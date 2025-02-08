@@ -1,27 +1,46 @@
 {
   "name": "@atools/cf",
   "version": "1.0.12",
-  "description": "a guided and prescriptive CLI creator.",
+  "description": "A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort. Built with its own tools!",
   "main": "lib/index.js",
-  "directories": {
-    "test": "test"
-  },
+  "files": [
+    "lib",
+    "bin",
+    "commands"
+  ],
   "bin": {
     "cf": "bin/cf"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
-    "lint": "eslint --ext .js src/** commands/** --fix",
+    "clean": "rm -rf lib",
+    "lint": "eslint --ext .js src test --fix",
     "dev": "babel src --out-dir lib --watch",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir lib",
-    "prepublish": "npm run build"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "npm run clean && babel src --out-dir lib",
+    "verify": "npm run lint && npm run build && npm run test",
+    "prepublishOnly": "npm run verify",
+    "release:patch": "npm version patch && git push --follow-tags && npm publish --access public",
+    "release:minor": "npm version minor && git push --follow-tags && npm publish --access public",
+    "release:major": "npm version major && git push --follow-tags && npm publish --access public",
+    "release": "npm run release:patch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qddegtya/cf.git"
   },
   "keywords": [
-    "cli"
+    "cli",
+    "commander",
+    "framework",
+    "hooks",
+    "class-based",
+    "async",
+    "dogfooding"
   ],
   "author": "xiaoa",
   "license": "MIT",
@@ -30,12 +49,14 @@
   },
   "homepage": "https://github.com/qddegtya/cf#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.15.0",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
     "babel-eslint": "^10.1.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-stage-1": "^6.24.1",
+    "babel-jest": "^27.0.6",
     "debug": "^4.3.1",
-    "eslint": "^7.18.0"
+    "eslint": "^7.18.0",
+    "jest": "^27.0.6"
   },
   "dependencies": {
     "co": "^4.6.0",
@@ -44,5 +65,22 @@
     "map-stream": "^0.0.7",
     "vinyl-fs": "^3.0.3",
     "xajs": "1.0.x"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

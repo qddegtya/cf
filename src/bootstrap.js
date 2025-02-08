@@ -1,81 +1,132 @@
-import defaultCli from 'commander'
+import commander from 'commander'
 import fs from 'fs'
 import path from 'path'
 import debugFactory from 'debug'
 import injectCommandFromClass from './injectCommandsFromClass'
-import { functional } from 'xajs'
+import { Tapable } from './hooks/Tapable'
 
-const { Puber, Suber } = functional.helper.PS
 const debug = debugFactory('cf:core:bootstrap')
 
-const tap = new Puber('cf-tap')
+// 创建一个新的 Tapable 实例
+export const hooks = new Tapable()
 
-let isHooked = (n) => {
-  const subers = Object.keys(tap._subers)
-  return subers.indexOf(n) >= 0
+// 用于跟踪 bootstrap 是否已经执行
+let isBootstrapped = false
+
+// 用于测试的重置函数
+export const _resetBootstrap = () => {
+  isBootstrapped = false
+  hooks.hooks.clear()
 }
 
-tap.emit = (msg, payload) => {
-  isHooked(msg) && tap.pub(msg, payload)
-}
-
-const bootstrap = ({ cli = defaultCli, root, version }) => {
-  // set version
-  cli.version(version)
-
-  const tapHook = (name, next) => {
-    isHooked(name) ? tap.emit(name, next) : next()
+/**
+ * Bootstrap the CLI application
+ * @param {Object} options Configuration options
+ * @param {string} options.root Root directory for command discovery
+ * @param {string} options.version CLI version
+ * @throws {Error} If bootstrap is called more than once
+ * @throws {Error} If required parameters are missing
+ */
+const bootstrap = async ({ root, version }) => {
+  // 参数验证
+  if (!root || typeof root !== 'string') {
+    throw new Error('Root directory must be specified')
+  }
+  if (!version || typeof version !== 'string') {
+    throw new Error('Version must be specified')
+  }
+  if (!fs.existsSync(root) || !fs.statSync(root).isDirectory()) {
+    throw new Error(`Root directory "${root}" does not exist or is not a directory`)
   }
 
-  const parse = () => {
-    // start parse
-    cli.parse(process.argv)
+  // 防止多次执行
+  if (isBootstrapped) {
+    throw new Error('Bootstrap can only be called once')
   }
 
-  const inject = () => {
+  // 设置版本
+  commander.version(version)
+
+  const parse = async (next) => {
+    commander.parse(process.argv)
+    await next()
+  }
+
+  const inject = async (next) => {
     debug('commands entry path: %s', root)
 
-    // inject commands
-    const modules = fs.readdirSync(root).map((moduleEntry) => {
+    try {
+      // inject commands
+      const modules = fs.readdirSync(root).map((moduleEntry) => {
         let modulePath = path.join(root, moduleEntry)
         debug('command module loaded: %s', modulePath)
-        return module.require(modulePath).default || module.require(modulePath)
-      }),
-      mods = modules.slice()
+        try {
+          return require(modulePath).default || require(modulePath)
+        } catch (err) {
+          debug(`Failed to load module ${modulePath}: ${err}`)
+          return null
+        }
+      }).filter(Boolean)
+      
+      const mods = modules.slice()
 
-    while ((module = mods.pop())) {
-      try {
-        injectCommandFromClass(cli, module, {
-          root,
-          version,
-        })
-      } catch (err) {
-        debug(`inject process fail: ${err}`)
-        break
+      while ((module = mods.pop())) {
+        try {
+          injectCommandFromClass(commander, module, {
+            root,
+            version,
+          })
+        } catch (err) {
+          debug(`inject process fail: ${err}`)
+          throw err
+        }
       }
-    }
 
-    debug('all commands have been inject.')
-    tapHook('will-parse', parse)
+      debug('all commands have been inject.')
+      await next()
+    } catch (error) {
+      debug('Fatal error during command injection: %O', error)
+      throw error
+    }
   }
 
-  tapHook('will-inject', inject)
+  // 注册内置 hooks - 确保它们在用户 hooks 之后执行
+  hooks.tapBuiltin('will-inject', inject)
+  hooks.tapBuiltin('will-parse', parse)
+
+  try {
+    // 执行 hook chains
+    await hooks.call('will-inject')
+    await hooks.call('will-parse')
+    
+    // 标记为已执行
+    isBootstrapped = true
+  } catch (error) {
+    debug('Bootstrap failed: %O', error)
+    throw error
+  }
 }
 
+// 为了向后兼容，保留 hooks 接口
 bootstrap.hooks = {
-  listen(n, h = (next) => next()) {
-    if (!n) return
-
-    const hook = new Suber(n)
-    tap.addSuber(hook)
-
-    hook.rss(tap, [
-      {
-        msg: n,
-        handler: h,
-      },
-    ])
+  /**
+   * @deprecated Use tap() instead. This method will be removed in future versions.
+   */
+  listen(name, handler = (next) => next()) {
+    console.warn('Warning: hooks.listen() is deprecated. Please use hooks.tap() instead.')
+    if (!name) return
+    this.tap(name, handler)
   },
+
+  /**
+   * Register a hook handler
+   * @param {string} name - Hook name
+   * @param {Function} handler - Hook handler function
+   */
+  tap(name, handler = (next) => next()) {
+    if (!name) return
+    hooks.tap(name, handler)
+  }
 }
 
 export default bootstrap
