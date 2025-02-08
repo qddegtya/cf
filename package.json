@@ -1,6 +1,6 @@
 {
   "name": "@atools/cf",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort. Built with its own tools!",
   "main": "lib/index.js",
   "packageManager": "pnpm@8.15.1",
