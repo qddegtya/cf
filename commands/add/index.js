@@ -5,7 +5,7 @@ const inquirer = require('inquirer')
 const AJS = require('xajs')
 const vfs = require('vinyl-fs')
 const map = require('map-stream')
-const { IF_CWD_IS_INNER_PKG } = require('../../lib/util')
+const { IF_CWD_IS_INNER_PKG, readMyPackageJson } = require('../../lib/util')
 
 const tpl = AJS.future.tpl
 const MagicString = AJS.lang.MagicString
@@ -75,7 +75,7 @@ class Add extends BC {
                 tpl.exec(file.contents.toString(), {
                   pkg: IF_CWD_IS_INNER_PKG
                     ? 'require("../../lib/BaseCommand").default'
-                    : 'require("@atools/cf").BC',
+                    : `require("${readMyPackageJson().name}").BC`,
                   name: MagicString(name).capitalize(),
                   command: name,
                   alias,
