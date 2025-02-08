@@ -100,7 +100,7 @@ const { bootstrap } = require('@atools/cf');
 
 bootstrap.hooks.tap('will-inject', async (next) => {
   // 添加你的自定义逻辑
-  console.log('正在注入命令...');
+  console.log('正在执行 hook 逻辑...');
   await next();
 });
 ```
@@ -135,7 +135,6 @@ const app = await bootstrap({
 
 ```javascript
 bootstrap({
-  cli: commander,    // 自定义的 Commander 实例（可选）
   root: __dirname,   // 命令发现的根目录
   version: '1.0.0'   // CLI 版本
 })
