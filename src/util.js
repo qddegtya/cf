@@ -2,8 +2,10 @@ const fs = require('fs')
 const path = require('path')
 const cwd = process.cwd()
 
-const IF_CWD_IS_INNER_PKG =
-  JSON.parse(fs.readFileSync(path.join(cwd, 'package.json')).toString())
-    .name === '@atools/cf'
+function readPackageJson(pkgPath) {
+  return JSON.parse(fs.readFileSync(path.resolve(pkgPath)).toString())
+}
 
-export { IF_CWD_IS_INNER_PKG }
+const IF_CWD_IS_INNER_PKG = readPackageJson(path.join(cwd, 'package.json')).name === '@atools/cf'
+
+export { IF_CWD_IS_INNER_PKG, readPackageJson }
