@@ -32,14 +32,14 @@
 
 ```bash
 # 安装框架
-$ npm install -g @atools/cf
+$ pnpm add -g @atools/cf
 
 # 创建新的 CLI 项目
 $ mkdir my-cli && cd my-cli
-$ npm init -y
+$ pnpm init
 
 # 添加依赖
-$ npm install @atools/cf --save
+$ pnpm add @atools/cf
 
 # 初始化项目（即将支持）
 $ cf init
@@ -138,4 +138,3 @@ bootstrap({
   root: __dirname,   // 命令发现的根目录
   version: '1.0.0'   // CLI 版本
 })
-```

@@ -3,6 +3,7 @@
   "version": "1.1.0",
   "description": "A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort. Built with its own tools!",
   "main": "lib/index.js",
+  "packageManager": "pnpm@8.15.1",
   "files": [
     "lib",
     "bin",
@@ -12,7 +13,7 @@
     "cf": "bin/cf"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "clean": "rm -rf lib",
@@ -21,13 +22,13 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "build": "npm run clean && babel src --out-dir lib",
-    "verify": "npm run lint && npm run build && npm run test",
-    "prepublishOnly": "npm run verify",
-    "release:patch": "npm version patch && git push --follow-tags && npm publish --access public",
-    "release:minor": "npm version minor && git push --follow-tags && npm publish --access public",
-    "release:major": "npm version major && git push --follow-tags && npm publish --access public",
-    "release": "npm run release:patch"
+    "build": "pnpm run clean && babel src --out-dir lib",
+    "verify": "pnpm run lint && pnpm run build && pnpm run test",
+    "prepublishOnly": "pnpm run verify",
+    "release:patch": "pnpm version patch && git push --follow-tags && pnpm publish --access public",
+    "release:minor": "pnpm version minor && git push --follow-tags && pnpm publish --access public",
+    "release:major": "pnpm version major && git push --follow-tags && pnpm publish --access public",
+    "release": "pnpm run release:patch"
   },
   "repository": {
     "type": "git",
