@@ -5,7 +5,7 @@ const inquirer = require('inquirer')
 const AJS = require('xajs')
 const vfs = require('vinyl-fs')
 const map = require('map-stream')
-const { IF_CWD_IS_INNER_PKG, readMyPackageJson } = require('../../lib/util')
+const { isInnerPackage, readMyPackageJson } = require('../../lib/util')
 
 const tpl = AJS.future.tpl
 const MagicString = AJS.lang.MagicString
@@ -64,7 +64,7 @@ class Add extends BC {
 
         vfs
           .src(
-            IF_CWD_IS_INNER_PKG
+            isInnerPackage()
               ? path.resolve(__dirname, '../../_template/cmd.tpl')
               : path.join(cwd, template)
           )
@@ -73,7 +73,7 @@ class Add extends BC {
               file.basename = 'index.js'
               file.contents = Buffer.from(
                 tpl.exec(file.contents.toString(), {
-                  pkg: IF_CWD_IS_INNER_PKG
+                  pkg: isInnerPackage()
                     ? 'require("../../lib/BaseCommand").default'
                     : `require("${readMyPackageJson().name}").BC`,
                   name: MagicString(name).capitalize(),
