@@ -10,6 +10,8 @@ const { isInnerPackage, readMyPackageJson } = require('../../lib/util')
 const tpl = AJS.future.tpl
 const MagicString = AJS.lang.MagicString
 const cwd = process.cwd()
+const DEFAULT_TEMPLATE = path.join(__dirname, '../../_template/cmd.tpl')
+const DEFAULT_OUTPUT = 'commands'
 
 class Add extends BC {
   constructor(config) {
@@ -31,10 +33,23 @@ class Add extends BC {
   }
 
   async do() {
-    const { output, template } = this.commander.opts()
-
-    if (!template) throw new Error('Must set tpl param.')
-    if (!output) throw new Error('Must set output param.')
+    let { output = DEFAULT_OUTPUT, template } = this.commander.opts()
+    
+    // 如果是 cf 框架内部，使用相对路径
+    if (isInnerPackage()) {
+      template = template || '../../_template/cmd.tpl'
+      const templatePath = path.join(__dirname, template)
+      if (!fs.existsSync(templatePath)) {
+        throw new Error(`Template not found at: ${templatePath}`)
+      }
+      template = templatePath
+    } else {
+      // 外部包使用默认模板
+      template = template || DEFAULT_TEMPLATE
+      if (!fs.existsSync(template)) {
+        throw new Error(`Template not found at: ${template}`)
+      }
+    }
 
     await inquirer
       .prompt([
@@ -63,11 +78,7 @@ class Add extends BC {
           throw new Error('Command alias can\'t be the same as its name')
 
         vfs
-          .src(
-            isInnerPackage()
-              ? path.resolve(__dirname, '../../_template/cmd.tpl')
-              : path.join(cwd, template)
-          )
+          .src(template)
           .pipe(
             map((file, cb) => {
               file.basename = 'index.js'

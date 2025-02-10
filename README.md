@@ -3,7 +3,6 @@
 	<img width="128" src="media/logo.png" alt="cf">
   <br>
   <br>
-  <br>
 </h1>
 
 <p align="center">
@@ -44,23 +43,37 @@ $ pnpm add @atools/cf
 # 初始化项目（即将支持）
 $ cf init
 
-# 添加新命令
-$ cf add -o commands -t node_modules/@atools/cf/_template/cmd.tpl
+# 添加新命令（使用默认配置）
+$ cf add
 ```
 
 ## 添加命令
 
-使用内置的 `add` 命令可以快速创建新的命令模块：
+使用内置的 `add` 命令可以快速创建新的命令模块。该命令支持以下选项：
 
+- `-o, --output <path>`: 输出目录，默认为 `commands`
+- `-t, --template <path>`: 模板文件路径，默认使用内置模板
+
+基本用法：
 ```bash
-$ cf add -o commands -t node_modules/@atools/cf/_template/cmd.tpl
+# 使用默认配置
+$ cf add
+
+# 自定义输出目录
+$ cf add -o custom-commands
+
+# 自定义模板
+$ cf add -t custom-template.tpl
+
+# 完整配置
+$ cf add -o custom-commands -t custom-template.tpl
 
 [CF] -> command name: hello
 [CF] -> command alias: h
 [CF] -> command description: Say hello to someone
 ```
 
-这将自动创建如下命令文件 `commands/hello/index.js`：
+这将自动创建命令文件（例如 `commands/hello/index.js`）：
 
 ```javascript
 const { BC } = require('@atools/cf');
