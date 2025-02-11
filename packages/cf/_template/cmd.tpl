@@ -1,6 +1,6 @@
-const BC = ${'pkg'};
+const { BaseCommand } = ${'pkg'};
 
-class ${'name'} extends BC {
+class ${'name'} extends BaseCommand {
   init (commander) {
 
   }

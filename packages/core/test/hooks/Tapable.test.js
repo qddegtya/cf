@@ -1,4 +1,4 @@
-import { Tapable } from '../../src/hooks/Tapable'
+import { Tapable } from '../../src/hook-system/Tapable'
 
 describe('Tapable', () => {
   let tapable

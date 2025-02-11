@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var path = require('path')
-var bootstrap = require('../lib/bootstrap.js').default
-var { readMyPackageJson } = require('../lib/util.js')
+var { bootstrap } = require('../lib/')
+var { readMyPackageJson } = require('../lib/util')
 
 bootstrap.hooks.tap('will-inject', async (next) => {
   // @see https://manytools.org/hacker-tools/ascii-banner/

@@ -1,6 +1,6 @@
-const BC = require('../../lib/BaseCommand').default
+const { BaseCommand } = require('../../lib')
 
-class Init extends BC {
+class Init extends BaseCommand {
   init (commander) {
 
   }

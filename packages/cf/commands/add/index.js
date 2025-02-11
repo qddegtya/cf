@@ -1,11 +1,11 @@
-const BC = require('../../lib/BaseCommand').default
+const { BaseCommand } = require('../../lib')
 const fs = require('fs')
 const path = require('path')
 const inquirer = require('inquirer')
 const AJS = require('xajs')
 const vfs = require('vinyl-fs')
 const map = require('map-stream')
-const { isInnerPackage, readMyPackageJson } = require('../../lib/util')
+const { isInnerPackage } = require('../../lib/util')
 
 const tpl = AJS.future.tpl
 const MagicString = AJS.lang.MagicString
@@ -13,7 +13,7 @@ const cwd = process.cwd()
 const DEFAULT_TEMPLATE = path.join(__dirname, '../../_template/cmd.tpl')
 const DEFAULT_OUTPUT = 'commands'
 
-class Add extends BC {
+class Add extends BaseCommand {
   constructor(config) {
     super(config)
 
@@ -85,8 +85,8 @@ class Add extends BC {
               file.contents = Buffer.from(
                 tpl.exec(file.contents.toString(), {
                   pkg: isInnerPackage()
-                    ? 'require("../../lib/BaseCommand").default'
-                    : `require("${readMyPackageJson().name}").BC`,
+                    ? 'require("../../lib")'
+                    : 'require("@atools/cf-core")',
                   name: MagicString(name).capitalize(),
                   command: name,
                   alias,

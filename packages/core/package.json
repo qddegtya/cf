@@ -1,0 +1,45 @@
+{
+  "name": "@atools/cf-core",
+  "version": "1.0.0",
+  "description": "Core functionality for CF - A guided, interactive CLI framework for Node.js",
+  "private": false,
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "babel src --out-dir lib --config-file ./babel.config.js",
+    "test": "jest",
+    "lint": "eslint src test --fix"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "commander": "^7.0.0"
+  },
+  "devDependencies": {
+    "debug": "^4.3.1",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/preset-env": "^7.12.11"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/node_modules/**"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

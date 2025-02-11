@@ -14,7 +14,7 @@ function isInnerPackage() {
     }
     return JSON.parse(fs.readFileSync(cwdPackageJsonPath).toString())
       .name === readMyPackageJson().name
-  } catch (e) {
+  } catch (e) { // eslint-disable-line
     return false
   }
 }

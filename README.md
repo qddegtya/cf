@@ -1,3 +1,5 @@
+# CF Framework Monorepo
+
 <h1 align="center">
   <br>
 	<img width="128" src="media/logo.png" alt="cf">
@@ -18,6 +20,43 @@
 
 ✨ 一个引导式的、基于类的 Node.js CLI 开发框架，具有强大的钩子系统。专为创建优雅且易维护的命令行应用而设计。有趣的是，这个框架本身就是使用自己来构建的！
 
+## 包结构
+
+| Package | Version | Description |
+|---------|---------|-------------|
+| [@atools/cf-core](./packages/core) | [![npm version](https://badge.fury.io/js/%40atools%2Fcf-core.svg)](https://badge.fury.io/js/%40atools%2Fcf-core) | 核心功能包，提供基础命令系统、钩子系统等 |
+| [@atools/cf](./packages/cf) | [![npm version](https://badge.fury.io/js/%40atools%2Fcf.svg)](https://badge.fury.io/js/%40atools%2Fcf) | 主应用包，提供命令行工具和模板 |
+
+## 重要更新
+
+🚀 **2.0.0 版本已发布！**
+
+在这个重大版本更新中，我们：
+- 重构了项目结构，采用 monorepo 架构
+- 将核心功能抽离到 `@atools/cf-core` 包
+- 1.x 版本需要使用迁移 🔧 工具
+- 优化了项目配置和构建流程
+
+## 开发
+
+```bash
+# 安装依赖
+pnpm install
+
+# 构建所有包
+pnpm build
+
+# 运行测试
+pnpm test
+
+# 代码检查
+pnpm lint
+
+# 发布新版本
+pnpm release       # 正式版
+pnpm release:canary # 预览版
+```
+
 # 特性
 
 - 🎯 **引导式开发** - 交互式创建和添加命令，告别繁琐的手动配置
@@ -29,32 +68,26 @@
 
 # 快速开始
 
+## 安装
+
 ```bash
-# 安装框架
-$ pnpm add -g @atools/cf
+# 使用 npm
+npm install @atools/cf
 
-# 创建新的 CLI 项目
-$ mkdir my-cli && cd my-cli
-$ pnpm init
+# 使用 yarn
+yarn add @atools/cf
 
-# 添加依赖
-$ pnpm add @atools/cf
-
-# 初始化项目（即将支持）
-$ cf init
-
-# 添加新命令（使用默认配置）
-$ cf add
+# 使用 pnpm
+pnpm add @atools/cf
 ```
 
-## 添加命令
+## 使用 add 命令
 
-使用内置的 `add` 命令可以快速创建新的命令模块。该命令支持以下选项：
+`add` 命令用于快速创建新的命令模块，支持以下选项：
 
 - `-o, --output <path>`: 输出目录，默认为 `commands`
 - `-t, --template <path>`: 模板文件路径，默认使用内置模板
 
-基本用法：
 ```bash
 # 使用默认配置
 $ cf add
@@ -65,22 +98,22 @@ $ cf add -o custom-commands
 # 自定义模板
 $ cf add -t custom-template.tpl
 
-# 完整配置
-$ cf add -o custom-commands -t custom-template.tpl
-
 [CF] -> command name: hello
 [CF] -> command alias: h
 [CF] -> command description: Say hello to someone
 ```
 
-这将自动创建命令文件（例如 `commands/hello/index.js`）：
+这将创建一个新的命令文件，例如 `commands/hello/index.js`：
 
 ```javascript
-const { BC } = require('@atools/cf');
+const { BaseCommand } = require('@atools/cf-core');
 
-class Hello extends BC {
+class Hello extends BaseCommand {
+  constructor(config) {
+    super(config);
+  }
+
   init(commander) {
-    // 在这里配置命令选项
     commander
       .option('-n, --name <name>', '要问候的名字');
   }
@@ -91,63 +124,60 @@ class Hello extends BC {
   }
 }
 
-Hello.command = 'hello'
-Hello.alias = 'h'
-Hello.description = 'Say hello to someone'
+Hello.command = 'hello';
+Hello.alias = 'h';
+Hello.description = 'Say hello to someone';
 
 module.exports = Hello;
 ```
 
-## 高级用法
-
-### 钩子系统
-
-框架提供了强大的钩子系统用于扩展功能：
+## 基本使用
 
 ```javascript
-const { bootstrap } = require('@atools/cf');
+const { BaseCommand } = require('@atools/cf-core');
 
-// 可用的钩子：
-// - will-inject: 在命令模块注入之前
-// - will-parse: 在 CLI 引擎启动之前
+class MyCommand extends BaseCommand {
+  constructor(config) {
+    super(config);
+  }
 
+  init(commander) {
+    // 配置命令选项
+  }
+
+  async do() {
+    // 实现命令逻辑
+  }
+}
+```
+
+## Hook 系统
+
+CF 框架使用 `bootstrap.hooks` 提供了简单而强大的钩子系统：
+
+```javascript
+const { bootstrap } = require('@atools/cf-core');
+
+// 注册 will-inject 钩子
 bootstrap.hooks.tap('will-inject', async (next) => {
-  // 添加你的自定义逻辑
-  console.log('正在执行 hook 逻辑...');
+  // 在命令注入前执行的逻辑
+  console.log('Command injection starting...');
   await next();
 });
-```
 
-### 启动和配置
-
-```javascript
-const { bootstrap } = require('@atools/cf');
-
-// 初始化 CLI 应用
-const app = await bootstrap({
-  root: path.join(__dirname, 'commands'), // 命令目录路径
-  version: '1.0.0'                        // CLI 版本号
-});
-
-// CLI 会自动扫描并注入 commands 目录下的所有命令
-```
-
-## API 参考
-
-### BaseCommand
-
-用于创建 CLI 命令的基类：
-
-- `static command`: 命令名称（必需）
-- `static alias`: 命令别名（可选）
-- `static description`: 命令描述（可选）
-- `init(commander)`: 配置命令选项
-- `do()`: 执行命令逻辑
-
-### Bootstrap 选项
-
-```javascript
+// 启动应用
 bootstrap({
-  root: __dirname,   // 命令发现的根目录
-  version: '1.0.0'   // CLI 版本
-})
+  root: path.join(__dirname, 'commands'),
+  version: '1.0.0'
+});
+```
+
+> **注意**：`ui`、`init` 和 `remove` 命令目前正在开发中，敬请期待！
+
+## 贡献
+
+欢迎提交 issue 和 PR！请查看项目根目录的贡献指南。
+
+## 许可证
+
+MIT © [CF Team]

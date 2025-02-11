@@ -2,8 +2,8 @@ import commander from 'commander'
 import fs from 'fs'
 import path from 'path'
 import debugFactory from 'debug'
-import injectCommandFromClass from './injectCommandsFromClass'
-import { Tapable } from './hooks/Tapable'
+import injectCommandFromClass from './__internal__/injectCommandsFromClass'
+import { Tapable } from './hook-system/Tapable'
 
 const debug = debugFactory('cf:core:bootstrap')
 
@@ -107,7 +107,6 @@ const bootstrap = async ({ root, version }) => {
   }
 }
 
-// 为了向后兼容，保留 hooks 接口
 bootstrap.hooks = {
   /**
    * @deprecated Use tap() instead. This method will be removed in future versions.

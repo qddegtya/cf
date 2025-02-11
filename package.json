@@ -1,35 +1,20 @@
 {
-  "name": "@atools/cf",
-  "version": "1.1.5",
-  "description": "A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort. Built with its own tools!",
-  "main": "lib/index.js",
+  "name": "cf-monorepo",
+  "private": true,
   "packageManager": "pnpm@8.15.1",
-  "files": [
-    "lib",
-    "bin",
-    "commands",
-    "_template"
-  ],
-  "bin": {
-    "cf": "bin/cf"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
+  "description": "A guided, interactive CLI framework monorepo",
   "scripts": {
-    "clean": "rm -rf lib",
-    "lint": "eslint --ext .js src test --fix",
-    "dev": "babel src --out-dir lib --watch",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "build": "pnpm run clean && babel src --out-dir lib",
-    "verify": "pnpm run lint && pnpm run build && pnpm run test",
-    "prepublishOnly": "pnpm run verify",
-    "release:patch": "pnpm version patch && git push --follow-tags && pnpm publish --access public",
-    "release:minor": "pnpm version minor && git push --follow-tags && pnpm publish --access public",
-    "release:major": "pnpm version major && git push --follow-tags && pnpm publish --access public",
-    "release": "pnpm run release:patch"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean",
+    "prepare": "husky install",
+    "prerelease": "turbo run clean build lint test",
+    "release": "changeset version",
+    "release:canary": "changeset version --snapshot canary",
+    "publish:stable": "pnpm run prerelease && changeset publish",
+    "publish:canary": "pnpm run prerelease && changeset publish --tag canary"
   },
   "repository": {
     "type": "git",
@@ -40,9 +25,7 @@
     "commander",
     "framework",
     "hooks",
-    "class-based",
-    "async",
-    "dogfooding"
+    "monorepo"
   ],
   "author": "xiaoa",
   "license": "MIT",
@@ -51,38 +34,15 @@
   },
   "homepage": "https://github.com/qddegtya/cf#readme",
   "devDependencies": {
-    "@babel/cli": "^7.15.0",
-    "@babel/core": "^7.15.0",
-    "@babel/preset-env": "^7.15.0",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.0.6",
-    "debug": "^4.3.1",
-    "eslint": "^7.18.0",
-    "jest": "^27.0.6"
+    "@changesets/cli": "^2.27.1",
+    "@commitlint/cli": "^18.6.0",
+    "@commitlint/config-conventional": "^18.6.0",
+    "eslint": "^9.20.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.2.0",
+    "turbo": "^1.12.2"
   },
-  "dependencies": {
-    "co": "^4.6.0",
-    "commander": "^7.0.0",
-    "inquirer": "^7.3.3",
-    "map-stream": "^0.0.7",
-    "vinyl-fs": "^3.0.3",
-    "xajs": "1.0.x"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/test/**/*.test.js"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.js",
-      "!**/node_modules/**"
-    ]
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }

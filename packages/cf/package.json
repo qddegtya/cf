@@ -1,0 +1,49 @@
+{
+  "name": "@atools/cf",
+  "version": "2.0.0",
+  "description": "A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort.",
+  "private": false,
+  "main": "lib/index.js",
+  "bin": {
+    "cf": "./bin/cf"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "commands",
+    "_template"
+  ],
+  "scripts": {
+    "clean": "rm -rf lib",
+    "build": "babel src --out-dir lib --config-file ./babel.config.js",
+    "test": "jest --passWithNoTests",
+    "lint": "eslint src --fix"
+  },
+  "dependencies": {
+    "@atools/cf-core": "1.x",
+    "inquirer": "^7.3.3",
+    "map-stream": "^0.0.7",
+    "vinyl-fs": "^3.0.3",
+    "xajs": "1.0.x"
+  },
+  "devDependencies": {
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/preset-env": "^7.12.11"
+  },
+  "keywords": [
+    "cli",
+    "commander",
+    "framework",
+    "hooks",
+    "class-based",
+    "async",
+    "dogfooding"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

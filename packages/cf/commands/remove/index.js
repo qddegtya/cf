@@ -1,6 +1,6 @@
-const BC = require('../../lib/BaseCommand').default
+const { BaseCommand } = require('../../lib')
 
-class Remove extends BC {
+class Remove extends BaseCommand {
   init (commander) {
 
   }
