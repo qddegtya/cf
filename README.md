@@ -1,5 +1,3 @@
-# CF Framework Monorepo
-
 <h1 align="center">
   <br>
 	<img width="128" src="media/logo.png" alt="cf">
