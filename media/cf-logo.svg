@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 发光效果底层 -->
+  <circle cx="100" cy="100" r="80" fill="#4A90E2" opacity="0.05"/>
+  
+  <!-- 中心图形 -->
+  <g transform="translate(100 100)">
+    <!-- 外圈六边形 -->
+    <path 
+      d="M-50,-28.87 L-50,28.87 L0,57.74 L50,28.87 L50,-28.87 L0,-57.74 Z" 
+      fill="none"
+      stroke="#4A90E2"
+      stroke-width="2"
+      opacity="0.3"
+    />
+    
+    <!-- 内圈主体 -->
+    <path 
+      d="M-35,-20.21 L-35,20.21 L0,40.42 L35,20.21 L35,-20.21 L0,-40.42 Z" 
+      fill="none"
+      stroke="#4A90E2"
+      stroke-width="3"
+    />
+    
+    <!-- 中心线条装饰 -->
+    <path 
+      d="M-20,0 L20,0 M0,-20 L0,20" 
+      stroke="#FFFFFF"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+    
+    <!-- 角度装饰 -->
+    <path 
+      d="M-15,-25 L-25,-15 M15,25 L25,15" 
+      stroke="#4A90E2"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+  </g>
+  
+  <!-- 底部命令行提示符造型 -->
+  <path 
+    d="M70,140 L85,150 L70,160" 
+    stroke="#4A90E2"
+    stroke-width="2"
+    stroke-linecap="round"
+    fill="none"
+  />
+  <line 
+    x1="90" 
+    y1="150" 
+    x2="130" 
+    y2="150" 
+    stroke="#4A90E2"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>

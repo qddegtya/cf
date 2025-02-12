@@ -1,15 +1,15 @@
 <h1 align="center">
   <br>
-	<img width="128" src="media/logo.png" alt="cf">
+	<img width="256" src="media/cf-logo-with-animation.svg" alt="cf">
   <br>
   <br>
 </h1>
 
 <p align="center">
-<em>I'd rather write programs to write programs than write programs.</em>
+<em>✨ A guided, interactive CLI framework for Node.js that helps you create elegant command-line tools with minimal effort.</em>
 <br>
 <br>
-<em>我想写的不只是程序，而且是会写程序的程序。</em>
+<em>CF</em>
 <br>
 <br>
 </p>
