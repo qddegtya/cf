@@ -99,7 +99,7 @@ bootstrap({
 
 #### hooks
 - `will-inject` - 在命令注入前执行
-- `will-parse` - 在命令注入前执行
+- `will-parse` - 在命令解析前执行
 
 ## 贡献
 

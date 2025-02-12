@@ -15,7 +15,7 @@ bootstrap.hooks.tap('will-inject', async (next) => {
                                                                                     
   `)
 
-  await next();
+  await next()
 })
 
 bootstrap({
