@@ -132,8 +132,8 @@ npm install @atools/cf@latest
 
 ## 贡献
 
-欢迎提交 issue 和 PR！请查看项目根目录的贡献指南。
+欢迎提交 issue 和 PR！
 
 ## 许可证
 
-MIT © [CF Team]
+MIT

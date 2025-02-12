@@ -24,8 +24,8 @@
 
 | Package | Version | Description |
 |---------|---------|-------------|
-| [@atools/cf-core](./packages/core) | [![npm version](https://badge.fury.io/js/%40atools%2Fcf-core.svg)](https://badge.fury.io/js/%40atools%2Fcf-core) | 核心功能包，提供基础命令系统、钩子系统等 |
-| [@atools/cf](./packages/cf) | [![npm version](https://badge.fury.io/js/%40atools%2Fcf.svg)](https://badge.fury.io/js/%40atools%2Fcf) | 主应用包，提供命令行工具和模板 |
+| [@atools/cf-core](./packages/core) | [![NPM Version](https://img.shields.io/npm/v/%40atools%2Fcf-core)](https://www.npmjs.com/package/@atools/cf-core) | 核心功能包，提供基础命令系统、钩子系统等 |
+| [@atools/cf](./packages/cf) | [![NPM Version](https://img.shields.io/npm/v/%40atools%2Fcf)](https://www.npmjs.com/package/@atools/cf) | 主应用包，提供命令行工具和模板 |
 
 ## 重要更新
 
@@ -176,8 +176,8 @@ bootstrap({
 
 ## 贡献
 
-欢迎提交 issue 和 PR！请查看项目根目录的贡献指南。
+欢迎提交 issue 和 PR！
 
 ## 许可证
 
-MIT © [CF Team]
+MIT

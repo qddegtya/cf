@@ -10,7 +10,7 @@
     "test": "turbo run test",
     "clean": "turbo run clean",
     "prepare": "husky install",
-    "prerelease": "turbo run clean build lint test",
+    "prerelease": "turbo run clean lint test build",
     "release": "changeset version",
     "release:canary": "changeset version --snapshot canary",
     "publish:stable": "pnpm run prerelease && changeset publish",
