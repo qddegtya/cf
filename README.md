@@ -131,6 +131,8 @@ Hello.description = 'Say hello to someone';
 module.exports = Hello;
 ```
 
+> **注意**：`ui`、`init` 和 `remove` 命令目前正在开发中，敬请期待！
+
 ## 基本使用
 
 ```javascript
@@ -171,8 +173,6 @@ bootstrap({
   version: '1.0.0'
 });
 ```
-
-> **注意**：`ui`、`init` 和 `remove` 命令目前正在开发中，敬请期待！
 
 ## 贡献
 
