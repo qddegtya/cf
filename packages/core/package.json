@@ -1,6 +1,6 @@
 {
   "name": "@atools/cf-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Core functionality for CF - A guided, interactive CLI framework for Node.js",
   "private": false,
   "main": "lib/index.js",
