@@ -18,6 +18,16 @@
 
 ✨ 一个引导式的、基于类的 Node.js CLI 开发框架，具有强大的钩子系统。专为创建优雅且易维护的命令行应用而设计。有趣的是，这个框架本身就是使用自己来构建的！
 
+# Projects Using CF
+
+Projects that use CF:
+
+* [efc](https://github.com/qddegtya/efc): 📃 Elegant devtool for formily component.
+* [portrayal](https://github.com/qddegtya/portrayal): 🎭 Generate your portrayal, rich and powerful.
+* [zao](https://github.com/qddegtya/zao): 🔨 Tiny & elegant scaffolding tool.
+
+> 💗 Waiting for you.
+
 ## 包结构
 
 | Package | Version | Description |
