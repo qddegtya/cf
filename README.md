@@ -27,6 +27,16 @@
 - 📦 **零配置** - 开箱即用的合理默认配置
 - 🛠️ **自举实现** - 框架本身就是最好的示例代码
 
+# Projects Using CF
+
+Projects that use CF:
+
+* [efc](https://github.com/qddegtya/efc): 📃 Elegant devtool for formily component.
+* [portrayal](https://github.com/qddegtya/portrayal): 🎭 Generate your portrayal, rich and powerful.
+* [zao](https://github.com/qddegtya/zao): 🔨 Tiny & elegant scaffolding tool.
+
+> 💗 Waiting for you.
+
 # 快速开始
 
 ```bash
