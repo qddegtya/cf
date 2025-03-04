@@ -15,6 +15,10 @@
       "dependsOn": ["clean"],
       "outputs": []
     },
+    "lint:fix": {
+      "dependsOn": ["clean"],
+      "outputs": []
+    },
     "dev": {
       "cache": false,
       "persistent": true
