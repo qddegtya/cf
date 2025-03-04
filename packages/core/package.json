@@ -11,7 +11,8 @@
     "clean": "rm -rf lib",
     "build": "babel src --out-dir lib --config-file ./babel.config.js",
     "test": "jest",
-    "lint": "eslint src test --fix"
+    "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix"
   },
   "dependencies": {
     "co": "^4.6.0",

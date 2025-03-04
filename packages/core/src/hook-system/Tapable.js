@@ -23,7 +23,7 @@ class Hook {
     const taps = this.taps.slice()
     
     try {
-      // 执行用户注册的hooks
+      // 执行用户注册的 hooks
       for (const tap of taps) {
         await new Promise((resolve, reject) => {
           try {
@@ -34,7 +34,7 @@ class Hook {
         })
       }
 
-      // 执行内置hook
+      // 执行内置 hook
       if (this.builtinTap) {
         await new Promise((resolve, reject) => {
           try {
@@ -59,7 +59,7 @@ class SyncHook extends Hook {
     const taps = this.taps.slice()
     
     try {
-      // 同步执行所有hooks
+      // 同步执行所有 hooks
       for (const tap of taps) {
         await new Promise((resolve, reject) => {
           try {
@@ -70,7 +70,7 @@ class SyncHook extends Hook {
         })
       }
       
-      // 执行内置hook
+      // 执行内置 hook
       if (this.builtinTap) {
         await new Promise((resolve, reject) => {
           try {
